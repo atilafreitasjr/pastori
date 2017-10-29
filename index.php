@@ -10,7 +10,6 @@ $dados = $historico->listar();
 
 $imputs = filter_input_array(INPUT_POST, $_POST);
 
-
 if (isset($imputs['piquete'])) {
     $inserir = $historico->set_imputs($imputs);
     $historico->cadastrar($inserir);
@@ -23,6 +22,8 @@ for ($index = 1; $index < 9; $index++) {
     $mensagem['g'][$index] = '';
     $mensagem['r'][$index] = '';
 
+    $quali_pasto[$index] = 1;
+
     if (!isset($_SESSION['r'][$index])) {
         $_SESSION['r'][$index] = 100;
     }
@@ -34,6 +35,7 @@ for ($index = 1; $index < 9; $index++) {
         if ($_SESSION['r'][$index] > 250) {
             $_SESSION['r'][$index] = 251;
             $mensagem['r'][$index] = 'Troque de piquete';
+            $quali_pasto[$index] = 2;
         } else {
             $_SESSION['r'][$index] = $_SESSION['r'][$index] + 30;
         }
@@ -64,17 +66,17 @@ for ($index = 1; $index < 9; $index++) {
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-	<title>Tablesorter - Tutsup</title>
-	
-	<!-- Estilos necessários para o tema do tablesorter -->
-	<link rel="stylesheet" href="css/blue/style.css">
-	
-	<!-- jQuery e Tablesorter -->
-	<script src="js/jquery-latest.js"></script>
-	<script src="js/jquery.tablesorter.min.js"></script>
-	
-	<!-- Meu script -->
-	<script src="js/scripts.js"></script>
+        <title>Tablesorter - Tutsup</title>
+
+        <!-- Estilos necessários para o tema do tablesorter -->
+        <link rel="stylesheet" href="css/blue/style.css">
+
+        <!-- jQuery e Tablesorter -->
+        <script src="js/jquery-latest.js"></script>
+        <script src="js/jquery.tablesorter.min.js"></script>
+
+        <!-- Meu script -->
+        <script src="js/scripts.js"></script>
         <title>Pratori</title>
         <style>
             div {
@@ -111,6 +113,7 @@ for ($index = 1; $index < 9; $index++) {
                     <td>
                         <form action="#" method="POST">
                             <input hidden="on" type="text" name="espectro" value="<?= $cor[$imputs['piquete']] ?>" />
+                            <input hidden="on" type="text" name="quali_pasto" value="<?= $quali_pasto[$imputs['piquete']] ?>" />
                             Onde estão os animais:<input type="text" width="2" name="piquete" value="<?= $imputs['piquete'] ?>" />    
                             <input type="submit" value="Atualizar dado do Drone" name="drone" />
                         </form>
@@ -125,6 +128,7 @@ for ($index = 1; $index < 9; $index++) {
                                     <th>código</th>
                                     <th>piquete</th>
                                     <th>espectro de cor</th>
+                                    <th>Qualidade do Pasto</th>
                                     <th>data</th>
                                 </tr>
                             </thead>
@@ -135,6 +139,15 @@ for ($index = 1; $index < 9; $index++) {
                                         <td><?= $value->cod ?></td>
                                         <td><?= $value->piquete ?></td>
                                         <td><?= $value->espectro ?></td>
+                                        <td><?php 
+                                                if ($value->quali_pasto === '1') {
+                                                    echo 'Bom';
+                                                } elseif ($value->quali_pasto === '2') {
+                                                     echo 'Ruim';
+                                                } else {
+                                                    echo '';
+                                                }
+                                        ?></td>
                                         <td><?= $value->data ?></td>
                                     </tr>
                                 <?php } ?>

@@ -18,6 +18,7 @@ class Historico {
     private $numero_animais;
     private $espectro;
     private $piquete;
+    private $quali_pasto;
     private $mysql;
     
     function getData() {
@@ -55,6 +56,10 @@ class Historico {
     function setPiquete($piquete) {
         $this->piquete = $piquete;
     }
+    
+    function setQuali_pasto($quali_pasto) {
+        $this->quali_pasto = $quali_pasto;
+    }
 
     function setMysql($mysql) {
         $this->mysql = $mysql;
@@ -91,11 +96,13 @@ class Historico {
                     . "(`data`, "
                     . "`numero_animais`, "
                     . "`espectro`, "
+                    . "`quali_pasto`, "
                     . "`piquete`) "
                     . "VALUES ("
                     . "'" . $classe->data . "', "
                     . $classe->numero_animais . ", "
                     . "'" . $classe->espectro . "', "
+                    . "'" . $classe->quali_pasto . "', "
                     . "'" . $classe->piquete . "')");
             $this->msg['txt'] = "<h4 class = 'txt_sucesso_form'>Registro gravado com sucesso!</h4><br>";
             $this->msg['status'] = true;
@@ -112,6 +119,7 @@ class Historico {
         empty($imputs['numero_animais']) ? $this->setNumero_animais(0) : $this->setNumero_animais($imputs['numero_animais']);
         empty($imputs['espectro']) ? $this->setEspectro('') : $this->setEspectro($imputs['espectro']);
         empty($imputs['piquete']) ? $this->setPiquete('') : $this->setPiquete($imputs['piquete']);
+        empty($imputs['quali_pasto']) ? $this->setQuali_pasto(FALSE) : $this->setQuali_pasto($imputs['quali_pasto']);
         return $this;
     }
 
