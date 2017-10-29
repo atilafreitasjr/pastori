@@ -1,13 +1,29 @@
 <?php
+session_start();
+
 $imputs = filter_input_array(INPUT_POST, $_POST);
+
+isset($imputs['piquete'])?'':$imputs['piquete'] = '3';
 
 echo'<br>$animal<pre>';
 print_r($imputs);
 echo '</pre><br>';
 
-$r1 = 100;
-$g1 = 100 + 5;
-$b1 = random_int(10, 200);
+for ($index = 1; $index < 4; $index++) {  
+    
+    if($index == $imputs['piquete']){
+        $r[$index] = 100;
+        $g[$index] = 100;
+        $b[$index] = random_int(50, 200);
+        
+        $cor[$index] = $r[$index].','.$g[$index].','.$b[$index];
+        
+    }
+
+}
+echo'<br>$index<pre>';
+    print_r($cor);
+    echo '</pre><br>';
 ?>
 
 <!doctype html>
@@ -28,15 +44,14 @@ $b1 = random_int(10, 200);
 <body>
  
 <span id="result">&nbsp;</span>
-<div style="background-color:rgb(<?= $r1.','.$g1.','.$b1 ?>);">1</div>
-<div style="background-color:rgb(<?= $r1.','.$g1.','.$b1 ?>);">2</div>
-<div style="background-color:rgb(<?= $r1.','.$g1.','.$b1 ?>);">3</div>
+<div style="background-color:rgb(<?php echo $cor['1']; ?>)">1</div>
+<div style="background-color:rgb(<?php echo $cor['2']; ?>)">2</div>
+<div style="background-color:rgb(<?php echo $cor['3']; ?>)">3</div>
 <br>
 <br>
 
 <form action="#" method="POST">
-    Onde estão os animais:<input type="text" name="animal" value="<?= $imputs['animal'] ?>" />
-    <input hidden="on" type="text" name="r1" value="<?= $imputs['r1'] ?>" />
+    Onde estão os animais:<input type="text" name="piquete" value="<?= $imputs['piquete'] ?>" />    
     <input type="submit" value="Atualizar dado do Drone" name="drone" />
 </form><br>
 
