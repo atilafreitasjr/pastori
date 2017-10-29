@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+$id = session_id();
+echo $id;
+?>
 $imputs = filter_input_array(INPUT_POST, $_POST);
 
 isset($imputs['piquete']) ? '' : $imputs['piquete'] = '1';
@@ -10,7 +12,17 @@ print_r($imputs);
 echo '</pre><br>';
 
 for ($index = 1; $index < 4; $index++) {
-
+    if (!isset($_SESSION [r] [$index])) {
+        $_SESSION [r] [$index] = 100
+       
+    }
+    if (!isset($_SESSION [g] [$index])) {
+        $_SESSION [g] [$index] = 100
+       
+    }
+$id = session_id();
+echo $id;
+?>
     if ($index == $imputs['piquete']) {
         $r[$index] = 100 + 30;
         $g[$index] = random_int(50, 200);
